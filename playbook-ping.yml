@@ -6,3 +6,4 @@
   tasks:
     - name: Module ping
       ping:
+        data: OK
