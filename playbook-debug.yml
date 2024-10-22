@@ -1,0 +1,8 @@
+---
+- name: Présentation du module debug
+  hosts: all
+
+  tasks:
+    - name: Module debug
+      ansible.builtin.debug:
+        msg: "Variable ansible_host: {{ ansible_host }}"
