@@ -1,0 +1,32 @@
+---
+- name: Présentation des variables
+  hosts: all
+
+  vars_files:
+    stage.var
+
+  vars:
+    stage: Ansible
+    stagiaires: 12
+
+  tasks:
+    - name: Variables stage et stagiaires
+      ansible.builtin.debug:
+        msg: "{{ stagiaires }} inscrits à la formation {{ stage }}"
+
+    - name: Inclusion de variables
+      ansible.builtin.include_vars:
+        file: data.yml
+
+    - name: Variable logins
+      ansible.builtin.debug:
+        msg: "Logins: {{ logins }}"
+      when: ansible_distribution == "Debian"
+
+    - name: Extra-variable
+      ansible.builtin.debug:
+        msg: "Jour: {{ jour | mandatory }}"
+
+    - name: On continue
+      ansible.builtin.debug:
+        msg: "On continue sur {{ inventory_hostname }}"

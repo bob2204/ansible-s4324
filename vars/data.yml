@@ -1,0 +1,9 @@
+---
+logins:
+  - login: bob
+    shell: /bin/bash
+    uid: 1000
+    groupes:
+      - admin
+      - devops
+      - ci/cd
