@@ -1,0 +1,16 @@
+---
+- name: Installation d'un service Redis
+  hosts: debiancli
+  become: true
+
+  tasks:
+    - name: Installation du paquet redis-server
+      ansible.builtin.package:
+        name: redis-server
+        state: present
+
+    - name: Configuration du service redis-server
+      ansible.builtin.systemd_service:
+        name: redis-server
+        enabled: true
+        state: started
