@@ -1,0 +1,40 @@
+---
+# ansible_hostname/ansible_fqdn/inventory_hostname
+# ansible_distribution 
+# ansible_distribution_version/ansible_distribution_major_version
+
+- name: Micro-TP n°5
+  hosts: all
+
+  tasks:
+    - name: Création du fichier /tmp/infos.txt
+      ansible.builtin.copy:
+        content: |
+          Hostname: "{{ ansible_hostname }}"
+          Distribution: "{{ ansible_distribution }}"  
+          Version: "{{ ansible_distribution_version }}"  
+        dest: /tmp/infos.txt
+        mode: "0644"
+
+    - name: Essaie encore
+      ansible.builtin.lineinfile:
+        line: "Hostname: {{ ansible_hostname }}\nDistribution: {{ ansible_distribution }}"
+        dest: /tmp/infos.txt
+        create: true
+        mode: "0644"
+
+    - name: Essaie encore
+      ansible.builtin.blockinfile:
+        block: |
+          Hostname: {{ ansible_hostname }}
+          Distribution: {{ ansible_distribution }}
+        dest: /tmp/infos.txt
+        create: true
+        mode: "0644"
+
+    - name: Utilisation du module template
+      ansible.builtin.template:
+        src: infos.txt.j2
+        dest: /tmp/infos.txt
+        mode: "0644"
+      tags: template
