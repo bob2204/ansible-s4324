@@ -1,0 +1,14 @@
+---
+- name: Clause register
+  hosts: debiancli
+
+  tasks:
+    - name: Commande grep sur un fichier
+      ansible.builtin.shell: grep bidule /etc/passwd
+      changed_when: false
+      register: result
+      failed_when: result.rc > 1
+
+    - name: Tâche de fin
+      ansible.builtin.debug:
+        var: result.rc
