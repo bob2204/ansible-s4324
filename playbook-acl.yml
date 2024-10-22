@@ -1,0 +1,19 @@
+---
+- name: Installation sur debiancli
+  hosts: debiancli
+  become: true
+
+  tasks:
+    - name: Installation du paquet acl
+      ansible.builtin.apt:
+        name: acl
+        update_cache: true
+
+- name: Installation sur fedoracli
+  hosts: fedoracli
+  become: true
+
+  tasks:
+    - name: Installation du paquet acl
+      ansible.builtin.yum:
+        name: acl
