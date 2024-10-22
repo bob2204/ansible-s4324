@@ -1,0 +1,27 @@
+---
+- name: Reconfiguration du service redis
+  hosts: debiancli
+  become: true
+
+  tasks:
+    - name: Modification du fichier /etc/redis/redis.conf
+      ansible.builtin.lineinfile:
+        regex: ^bind 127.0.0.1
+        line: bind 0.0.0.0
+        path: /etc/redis/redis.conf
+      notify:
+        - restart_redis
+
+    - meta: flush_handlers
+
+    - name: Tâche finale
+      ansible.builtin.debug:
+        msg: "Fini !"
+
+  handlers:
+    - name: Redémarrage du service
+      ansible.builtin.systemd_service:
+        name: "{{ redis_service_name }}"
+        state: restarted
+      listen:
+        - restart_redis
