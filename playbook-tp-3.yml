@@ -1,6 +1,6 @@
 ---
 - name: Installation d'un service Redis
-  hosts: debiancli
+  hosts: all
   become: true
 
   tasks:
