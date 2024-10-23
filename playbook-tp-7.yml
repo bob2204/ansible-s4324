@@ -1,0 +1,22 @@
+---
+- name: Micro-TP n°7
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Inclusion de variables
+      ansible.builtin.include_vars:
+        file: data.yml
+
+    - name: Création des groupes
+      ansible.builtin.group:
+        name: "{{ item.1 }}"
+      loop: "{{ logins | subelements('groupes') }}"
+
+    - name: Création des utilisateurs
+      ansible.builtin.user:
+        name: "{{ item.login }}"
+        uid: "{{ item.uid }}"
+        shell: "{{ item.shell }}"
+        groups: "{{ item.groupes }}"
+      loop: "{{ logins }}"
