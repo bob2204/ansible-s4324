@@ -23,7 +23,7 @@
           dest: /etc/nginx/sites-available
           mode: "0644"
           backup: true
-          notify: restart_nginx
+        notify: restart_nginx
 
     - name: Installation/configuration PHP-FPM sur groupe php
       when: inventory_hostname in groups.php
