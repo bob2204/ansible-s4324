@@ -1,0 +1,6 @@
+- name: Sous-tâche I
+  ansible.builtin.debug:
+    msg: "Sous-tâche I"
+- name: Sous-tâche II
+  ansible.builtin.debug:
+    msg: "Sous-tâche II"
