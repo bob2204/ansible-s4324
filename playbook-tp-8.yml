@@ -1,0 +1,26 @@
+---
+- name: Quelques variables magiques
+  hosts: all
+
+  tasks:
+    - name: Variable groups
+      ansible.builtin.debug:
+        var: groups
+      #run_once: true
+    
+    - name: Liste des groupes de chaque cible
+      ansible.builtin.debug:
+        msg: "{{ inventory_hostname }}: {{ item.key }}"
+      loop: "{{ groups | dict2items }}"
+      when:
+        - inventory_hostname in item.value
+        - item.key != 'all'
+
+    - name: Variable group_names
+      ansible.builtin.debug:
+        var: group_names
+
+    - name: Variable hostvars
+      ansible.builtin.debug:
+        var: hostvars
+
