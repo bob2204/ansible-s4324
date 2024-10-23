@@ -6,7 +6,7 @@ logins:
     groupes:
       - admin
       - devops
-      - ci/cd
+      - cicd
   - login: curt
     shell: /bin/bash
     uid: 1200
