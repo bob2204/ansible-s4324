@@ -7,3 +7,10 @@ logins:
       - admin
       - devops
       - ci/cd
+  - login: curt
+    shell: /bin/bash
+    uid: 1200
+    groupes:
+      - devops
+      - info
+      - sport

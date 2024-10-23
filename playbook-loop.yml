@@ -1,0 +1,43 @@
+---
+- name: Clause loop
+  hosts: debiancli
+
+  tasks:
+    - name: On itère...
+      ansible.builtin.debug:
+        msg: "Couleur n°{{ idx + 1 }}: {{ couleur }}"
+      loop:
+        - Marron
+        - Violette
+        - Vert
+      loop_control:
+        loop_var: couleur
+        index_var: idx
+
+    - name: Liste des interfaces
+      ansible.builtin.debug:
+        msg: "{{ iface }}"
+      loop: "{{ ansible_interfaces | sort }}"
+      loop_control:
+        loop_var: iface
+      when: iface != 'lo'
+
+    - name: Inclusion de la variable logins
+      ansible.builtin.include_vars:
+        file: data.yml
+      tags:
+        - test
+        - test2
+
+    - name: Liste des lognames
+      ansible.builtin.debug:
+        msg: "{{ item.login }}"
+      loop: "{{ logins }}"
+      tags:
+        - test2
+
+    - name: On itère sur logins[0]
+      ansible.builtin.debug:
+        msg: "{{ item.key }}: {{ item.value }}"
+      loop: "{{ logins[0] | dict2items }}"
+      tags: test
