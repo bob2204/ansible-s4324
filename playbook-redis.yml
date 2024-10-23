@@ -12,7 +12,8 @@
       notify:
         - restart_redis
 
-    - meta: flush_handlers
+    - name: Flush des handlers
+      ansible.builtin.meta: flush_handlers
 
     - name: Tâche finale
       ansible.builtin.debug:
