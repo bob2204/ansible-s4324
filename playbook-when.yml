@@ -1,0 +1,42 @@
+---
+- name: Les clauses when...
+  hosts: all
+
+  tasks:
+    - name: Tâche bidon
+      ansible.builtin.debug:
+        msg: "Texte..."
+      when: ansible_distribution == 'Debian'
+
+    - name: Tâche bidon
+      ansible.builtin.debug:
+        msg: "Texte..."
+      when:
+        - ansible_distribution == 'Debian'
+        - ansible_architecture == 'x86_64'
+
+    - name: Tâche bidon
+      ansible.builtin.debug:
+        msg: "Texte..."
+      when: ansible_distribution == 'Debian' or ansible_architecture == 'x86_64'
+
+    - name: Présentation de la clause block when
+      when: ansible_distribution == 'Debian'
+      block:
+        - name: Tâche bidon I
+          ansible.builtin.debug:
+            msg: "Texte..."
+
+        - name: Tâche bidon II
+          ansible.builtin.debug:
+            msg: "Texte..."
+
+    - name: Inclusion de tâches
+      ansible.builtin.import_tasks:
+        file: debian.yml
+      when: ansible_distribution in ('Debian','Ubuntu')
+
+    - name: Module shell
+      ansible.builtin.shell: whoami
+      changed_when: false
+      tags: whoami
