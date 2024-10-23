@@ -1,0 +1,12 @@
+---
+- name: Micro TP n°9
+  hosts: all
+
+  tasks:
+    - name: Fichier /tmp/ipv4.txt
+      ansible.builtin.copy:
+        content: |
+          {{ ansible_all_ipv4_addresses | regex_search('192.[.0-9]+') }}
+        dest: /tmp/ipv4.txt
+        mode: "0644"
+        backup: true
