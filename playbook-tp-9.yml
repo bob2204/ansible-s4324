@@ -6,7 +6,29 @@
     - name: Fichier /tmp/ipv4.txt
       ansible.builtin.copy:
         content: |
-          {{ ansible_all_ipv4_addresses | regex_search('192.[.0-9]+') }}
+          {{ ansible_hostname }}:{{ ansible_all_ipv4_addresses | regex_search('192.[.0-9]+') }}
         dest: /tmp/ipv4.txt
         mode: "0644"
         backup: true
+      tags: never
+
+    - name: Récupération en local des fichiers précédents
+      ansible.builtin.fetch:
+        dest: "fetch/{{ inventory_hostname }}.txt"
+        src: /tmp/ipv4.txt
+        flat: true
+
+    - name: Concaténation
+      ansible.builtin.shell: cat fetch/*.txt > fetch/ipv4.txt
+      connection: local
+      run_once: true
+
+    - name: Notion de délégation
+      ansible.builtin.lineinfile:
+        line: "{{ ansible_hostname }}:{{ ansible_all_ipv4_addresses | regex_search('192.[.0-9]+') }}"
+        dest: /tmp/all-ipv4.txt
+        mode: "0644"
+        backup: true
+        create: true
+      delegate_to: debiancli
+
