@@ -1,0 +1,15 @@
+---
+- name: Module set_fact
+  hosts: debiancli
+  gather_facts: true
+
+  tasks:
+    - name: Création d'une variable
+      ansible.builtin.set_fact:
+        stage: Ansible
+        cacheable: true
+      tags: never
+
+    - name: Affichage de la variable stage
+      ansible.builtin.debug:
+        msg: "Stage: {{ stage }}"
