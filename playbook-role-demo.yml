@@ -1,0 +1,7 @@
+---
+- name: Appel au rôle demo
+  hosts: debiancli
+
+  roles:
+    - role: demo
+      stage: Php

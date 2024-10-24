@@ -1,0 +1,12 @@
+---
+# tasks file for roles/demo
+
+- name: Tâche I du rôle demo
+  ansible.builtin.debug:
+    msg: "Rôle demo (formation {{ stage }})"
+
+- name: Appel à un handler
+  ansible.builtin.debug:
+    msg: "Rôle demo (appel à un handler)"
+  notify: appel_handler
+  changed_when: true

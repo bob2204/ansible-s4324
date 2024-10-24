@@ -1,0 +1,8 @@
+---
+# defaults file for roles/demo
+
+# Blablab
+stage: Ansible
+
+# Liste des stagiaires
+stagiaires: []

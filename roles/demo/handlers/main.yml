@@ -1,0 +1,7 @@
+---
+# handlers file for roles/demo
+
+- name: Handler de démo
+  ansible.builtin.debug:
+    msg: "Rôle demo (Dans le handler)"
+  listen: appel_handler 
