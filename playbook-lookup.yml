@@ -1,0 +1,47 @@
+---
+- name: Quelques lookups
+  hosts: all
+
+  vars:
+    formation_toulouse: Ansible
+    formation_rennes: Revit
+    formation_bordeaux: Kubernetes
+
+    centres:
+      - bordeaux
+      - rennes
+      - toulouse
+
+  tasks:
+    - name: Lookup dig
+      ansible.builtin.debug:
+        msg: "kernel.org: {{ lookup('dig', 'kernel.org') }}"
+
+    - name: Lookup env
+      ansible.builtin.debug:
+        msg: "PATH: {{ lookup('env', 'PATH') }}"
+
+    - name: Lookup file
+      ansible.builtin.debug:
+        msg: "data.txt: {{ lookup('file', 'files/data.txt') }}"
+
+    - name: Lookup lines (Récupération des lignes produites par la commande argument)
+      ansible.builtin.debug:
+        msg: "find /tmp: {{ lookup('lines', 'date +%N') }}"
+
+    - name: Création d'une variable
+      ansible.builtin.set_fact:
+        date: "{{ lookup('lines','date +%N') }}"
+      run_once: true
+
+    - name: Lookup lines
+      ansible.builtin.debug:
+        msg: "date: {{ date }}"
+
+    - name: Lookup vars
+      ansible.builtin.debug:
+        msg: "{{ centre }}: {{ lookup('vars','formation_'+centre) }}"
+      loop: "{{ centres }}"
+      loop_control:
+        loop_var: centre
+      tags: vars
