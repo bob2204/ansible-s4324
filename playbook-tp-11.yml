@@ -1,0 +1,14 @@
+---
+- name: Micro-TP n°11
+  hosts: all
+
+  tasks:
+    - name: Interface et IP (sauf 'lo')
+      ansible.builtin.lineinfile:
+        create: true
+        line: "{{ ansible_hostname }}: {{ item }} - {{ lookup('vars','ansible_'+item).ipv4.address }}"
+        path: /tmp/infos.txt
+      loop: "{{ ansible_interfaces }}"
+      when:
+        - item != 'lo'
+      delegate_to: localhost
