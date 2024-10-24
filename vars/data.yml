@@ -3,6 +3,7 @@ logins:
   - login: bob
     shell: /bin/bash
     uid: 1100
+    password: qwerty
     groupes:
       - admin
       - devops
@@ -10,6 +11,7 @@ logins:
   - login: curt
     shell: /bin/bash
     uid: 1200
+    password: azerty
     groupes:
       - devops
       - info
