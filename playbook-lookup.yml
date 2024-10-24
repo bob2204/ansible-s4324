@@ -45,3 +45,8 @@
       loop_control:
         loop_var: centre
       tags: vars
+
+    - name: Lookup explode maison
+      ansible.builtin.debug:
+        msg: "azerty: {{ lookup('explode','azerty') }}"
+      tags: explode
