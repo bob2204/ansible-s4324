@@ -1,0 +1,7 @@
+---
+# defaults file for roles/php
+#
+
+# Désactivation du service firewalld
+
+php_disable_firewall: false

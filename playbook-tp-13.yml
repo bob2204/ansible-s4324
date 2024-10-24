@@ -1,0 +1,19 @@
+---
+- name: TP n°13
+  hosts: all
+  become: true
+
+  roles:
+    - role: nginx
+      when: inventory_hostname in groups.http
+
+    - role: php
+      php_disable_firewall: true
+      when: inventory_hostname in groups.php
+
+  post_tasks:
+    - name: Copie des fichiers de site
+      ansible.builtin.copy:
+        src: site/
+        dest: /var/www/html
+        mode: "0644"

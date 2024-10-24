@@ -1,0 +1,19 @@
+---
+# tasks file for roles/nginx
+- name: Installation du serveur Nginx
+  ansible.builtin.package:
+    name: nginx
+
+- name: Configuration du service nginx
+  ansible.builtin.systemd_service:
+    name: nginx
+    state: started
+    enabled: true
+
+- name: Fichier de configuration de Nginx
+  ansible.builtin.copy:
+    src: nginx/default
+    dest: /etc/nginx/sites-available
+    mode: "0644"
+    backup: true
+  notify: restart_nginx

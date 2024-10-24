@@ -1,0 +1,34 @@
+---
+# tasks file for roles/php
+- name: Désactivation/arrêt du service firewalld
+  ansible.builtin.systemd_service:
+    name: firewalld
+    state: stopped
+    enabled: false
+  when:
+    - ansible_os_family == 'RedHat'
+    - php_disable_firewall
+
+- name: Installation du serveur php-fpm
+  ansible.builtin.package:
+    name: php-fpm
+
+- name: Configuration du service php-fpm
+  ansible.builtin.systemd_service:
+    name: php-fpm
+    state: started
+    enabled: true
+
+- name: Directive listen
+  ansible.builtin.lineinfile:
+    regex: ^listen = /run/php-fpm/www.sock
+    line: "listen = {{ ansible_all_ipv4_addresses | regex_search('192.168.[.0-9]+') }}:9000"
+    dest: /etc/php-fpm.d/www.conf
+  notify: reload_php
+
+- name: Directive listen.allowed_clients
+  ansible.builtin.lineinfile:
+    regex: ^listen.allowed_clients
+    state: absent
+    dest: /etc/php-fpm.d/www.conf
+  notify: reload_php
