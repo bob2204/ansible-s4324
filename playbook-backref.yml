@@ -1,0 +1,11 @@
+---
+- name: Référence arrière avec lineinfile
+  hosts: debiancli
+
+  tasks:
+    - name: Mise en commentaire de Ligne 3 dans /tmp/data.txt
+      ansible.builtin.lineinfile:
+        backrefs: true
+        regex: ^(Ligne [34])$
+        line: ;\1
+        path: /tmp/data.txt
